@@ -1,5 +1,20 @@
 # Evaluation record
 
+## Update - 0.4.0
+
+Adds explicit workflow/role routing and a guided bare-call wizard. The optional
+standard-library resolver returns intent only; it never installs, delegates or
+executes project work. Six new cases cover wizard defaults, scoped reviews/aliases,
+quoted data, invalid requests, scoped wizard and natural-language/custom profiles.
+Three further cases cover Windows literal paths, strict flags/explicit typos and
+plain-language mode scope. An additional case covers ordinary prose apostrophes. A CLI stdin case verifies quoted Windows targets. The suite now has thirty-six tests; Windows may skip
+the symlink privilege case.
+Parser tests do not prove native host argument forwarding or a live wizard conversation.
+
+The public inventory example is actual helper output from an invented isolated
+project. The image summarizes generated records; it is not a native-host screenshot.
+MIT credit is Kevan Wee and contributors; license terms otherwise unchanged.
+
 ## Update - 0.2.2
 
 Legal Counsel now reviews platform/design choices, risks, options and safeguards.

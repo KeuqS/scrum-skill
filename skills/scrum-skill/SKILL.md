@@ -13,6 +13,10 @@ Scrum events, stakeholder acceptance or professional judgment occurred.
 
 ## Start from the actual project
 
+Route explicit modes/roles and bare calls using [invocation guidance](references/invocation.md).
+No arguments starts a guided, context-aware wizard; it does not authorize delivery.
+The optional resolver returns intent only. Natural-language requests remain supported.
+
 Read applicable project instructions, current branch/status, existing goals/backlog,
 Definition of Done, sprint records and latest handoff before creating new artifacts.
 Resume an existing workspace rather than replacing it. Distinguish user instructions

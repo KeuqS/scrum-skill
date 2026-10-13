@@ -1,4 +1,9 @@
-# scrum-skill
+# scrum-skill - Scrum coordination for Codex and Claude Code
+
+[![Package checks](https://github.com/kevanwee/scrum-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/kevanwee/scrum-skill/actions/workflows/ci.yml)
+[![MIT license](https://img.shields.io/github/license/kevanwee/scrum-skill)](LICENSE)
+[![Version](https://img.shields.io/github/v/tag/kevanwee/scrum-skill)](https://github.com/kevanwee/scrum-skill/tags)
+
 
 > An experiment in applying Scrum principles with AI teammates. A human remains accountable for product decisions.
 
@@ -6,7 +11,14 @@ A project-neutral skill for **Codex and Claude Code**. Invoke it to create or re
 
 The human Product Owner can work in any domain. Engineering, QA, design, security and domain reviewers are selected for the project. Legal counsel, specific models, frontend packages and vendor plugins are **optional**, not built-in requirements.
 
-Version **0.3.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+Version **0.4.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+
+## See what it creates
+
+![Goal and generated Scrum workspace overview](assets/social-preview.png)
+
+[Run the inventory example](examples/inventory/README.md) to see real scaffold output.
+The image summarizes that helper output; it is not a native-host execution screenshot.
 
 ## Start here
 
@@ -15,7 +27,7 @@ Choose **one** installation route to avoid duplicate skill names.
 ### Codex plugin
 
 ```sh
-codex plugin marketplace add kevanwee/scrum-skill --ref v0.3.0
+codex plugin marketplace add kevanwee/scrum-skill --ref v0.4.0
 codex plugin add scrum-skill@scrum-skills
 ```
 
@@ -46,11 +58,29 @@ For local development after cloning, `claude --plugin-dir /path/to/scrum-skill` 
 
 ### Direct skill folder
 
-Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.3.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
+Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.4.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
 
 Skills-only installation does not register a plugin, hooks or an agent runtime. See [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills). This repo publishes compatible metadata; it does not install anything into your account automatically.
 
 ## What you can ask
+
+Use explicit modes or a role-specific request; a bare call opens a guided wizard.
+
+```text
+$scrum-skill wizard
+$scrum-skill setup --goal "Staff can inspect stock changes" --roles engineering,qa,design
+$scrum-skill resume
+$scrum-skill plan
+$scrum-skill deliver --target US-7
+$scrum-skill role design plan --target apps/web
+$scrum-skill role legal-counsel review --target docs/architecture
+$scrum-skill role qa review --target .github/workflows/ci.yml
+```
+
+[Invocation guide](skills/scrum-skill/references/invocation.md) explains modes, role aliases,
+the guided wizard and the optional intent resolver. These argument routes use one
+canonical skill; they do not register separate workers or automatically run tools.
+Natural-language requests continue to work:
 
 ```text
 $scrum-skill Resume from the project's latest handoff and reconcile the actual state.
@@ -213,3 +243,7 @@ claude plugin validate .claude-plugin/marketplace.json
 ```
 
 Package tests check manifest paths/versions, references and helper behavior. They do not certify facilitation quality or claim a live installed session on every host. The [evaluation record](EVALUATION.md) describes what was actually exercised. Mermaid README sources are rendered during authoring to catch syntax/layout failures. No supplied PDFs or project-specific backlog content is part of this repo.
+
+## Credits and contributions
+
+Created by **Kevan Wee and contributors**, licensed under MIT. See [contributing](CONTRIBUTING.md) and [help-wanted issues](https://github.com/kevanwee/scrum-skill/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
