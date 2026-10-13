@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from datetime import date
 from pathlib import Path
+from unittest.mock import patch
 
 REPO = Path(__file__).resolve().parents[1]
 SCRIPT = REPO / "skills/scrum-skill/scripts/init_workspace.py"
@@ -34,7 +35,7 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(state["state"], "proposed")
         self.assertEqual(state["forecast_end"], "2026-11-01")
         self.assertEqual(state["specialists"], ["engineering", "qa"])
-        self.assertEqual(state["skill_version"], "0.1.0")
+        self.assertEqual(state["skill_version"], "0.2.0")
         self.assertTrue((self.root / ".scrum/sprints/SPRINT-01-RETROSPECTIVE.md").is_file())
         self.assertTrue((self.root / ".scrum/handoffs/LATEST.md").is_file())
 
@@ -84,6 +85,48 @@ class WorkspaceTests(unittest.TestCase):
         for raw in ("qa,qa", "../../outside", "research,", "Domain Expert"):
             with self.subTest(raw=raw), self.assertRaises(ValueError):
                 workspace.specialists(raw)
+
+    def test_selected_presets_include_behavior_and_preserve_customization(self):
+        roles = ["engineering", "qa", "design", "security", "ai", "operations",
+                 "domain-reviewer", "legal-counsel", "privacy-counsel"]
+        workspace.apply(self.plan(roles=roles))
+        for role in roles:
+            with self.subTest(role=role):
+                copied = self.root / f".scrum/roles/{role}.md"
+                preset = REPO / f"skills/scrum-skill/assets/profiles/{role}.md"
+                self.assertEqual(copied.read_bytes(), preset.read_bytes())
+        customized = self.root / ".scrum/roles/qa.md"
+        customized.write_text("Actual project QA decisions.\n", encoding="utf-8")
+        self.assertEqual(self.plan(roles=roles), {})
+        self.assertEqual(customized.read_text(), "Actual project QA decisions.\n")
+
+    def test_custom_specialism_retains_template_fallback(self):
+        workspace.apply(self.plan(roles=["horticulture"]))
+        profile = (self.root / ".scrum/roles/horticulture.md").read_text()
+        self.assertIn("horticulture", profile)
+        self.assertIn("Owned files/work scope:", profile)
+
+    def test_crlf_packaged_preset_is_copied_without_newline_translation(self):
+        with tempfile.TemporaryDirectory() as packaged:
+            skill = Path(packaged)
+            (skill / "assets/profiles").mkdir(parents=True)
+            (skill / "references").mkdir()
+            body = b"# QA guide\r\n\r\nEvidence and boundaries.\r\n"
+            (skill / "assets/profiles/qa.md").write_bytes(body)
+            (skill / "assets/role-profile.md").write_text("# [specialism]\n")
+            (skill / "references/accountabilities.md").write_text("# Accountabilities\n")
+            with patch.object(workspace, "SKILL", skill):
+                workspace.apply(self.plan(roles=["qa"]))
+            copied = self.root / ".scrum/roles/qa.md"
+            self.assertEqual(copied.read_bytes(), body)
+            self.assertEqual(self.plan(roles=["qa"]), {})
+
+    def test_accountability_guidance_is_available_without_specialists(self):
+        workspace.apply(self.plan(roles=[]))
+        guide = self.root / ".scrum/ACCOUNTABILITIES.md"
+        self.assertIn("## Scrum Master", guide.read_text(encoding="utf-8"))
+        self.assertIn("ACCOUNTABILITIES.md", (self.root / ".scrum/TEAM.md").read_text())
+        self.assertFalse((self.root / ".scrum/roles").exists())
 
     def test_file_collision_is_detected_before_any_writes(self):
         (self.root / "CLAUDE.md").mkdir()

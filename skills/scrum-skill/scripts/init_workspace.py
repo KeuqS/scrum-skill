@@ -26,6 +26,12 @@ Apply existing project instructions first; do not infer human approval from agen
 """
 
 
+def read_guide(path: Path) -> str:
+    """Preserve distributed guide newlines when copying a selected profile."""
+    with path.open(encoding="utf-8", newline="") as stream:
+        return stream.read()
+
+
 def specialists(value: str) -> list[str]:
     if value == "none":
         return []
@@ -105,9 +111,11 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
     artifacts = {
         "workspace.json": json.dumps(state, indent=2) + "\n",
         "PRODUCT_GOAL.md": f"# Product Goal\n\n{goal}\n\nState: user-supplied direction; scope/refinement pending.\n",
-        "TEAM.md": "# Team agreement\n\nHuman Product Owner: accountable for value and backlog ordering.\n"
-                   "Scrum Master assistance: facilitate, inspect evidence and remove impediments.\n"
-                   "Developers: one cross-functional team owns its delivery plan and estimates.\n\n"
+        "TEAM.md": "# Team agreement\n\nOne Scrum Team; no sub-teams or internal hierarchy.\n"
+                   "One Product Owner (human): accountable for value, Product Goal and backlog ordering.\n"
+                   "One Scrum Master: serves the whole team; coaches Scrum/self-management and helps remove impediments.\n"
+                   "Developers: cross-functional; own plan/estimates and decide who does what, when and how.\n"
+                   "Read ACCOUNTABILITIES.md; profiles are skills within Developers, not separate teams.\n\n"
                    + (team or "- Sequential generalist mode; no spawned agents claimed.") +
                    "\n\nProfile selection is configurable; no legal qualification or vendor tool is required.\n",
         "PRODUCT_BACKLOG.md": "# Ordered Product Backlog\n\nState: refinement pending; no accepted items or estimates invented.\n\n"
@@ -141,13 +149,19 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
         "handoffs/LATEST.md": "# Latest checkpoint\n\nWorkspace initialized; planning is proposed, no work claimed Done.\n"
                               "Read INITIAL.md, ../TEAM.md, ../PRODUCT_GOAL.md, ../PRODUCT_BACKLOG.md and ../MASTER_PROMPT.md.\n",
         "MASTER_PROMPT.md": "# Fresh-session entrypoint\n\nRead project AGENTS.md and this workspace's TEAM, Goal, backlog, DoD and handoffs/LATEST.\n"
+                            "Read ACCOUNTABILITIES.md and selected role profiles when taking on work.\n"
                             "Inspect actual files/revision/evidence before resuming. Reconcile stale status rather than reinitializing.\n"
                             "Respect user/project permissions; do not infer agreement, test success or human judgment.\n"
                             "Refine the first usable slice and start it only when delivery is requested.\n",
     }
-    profile = (SKILL / "assets/role-profile.md").read_text(encoding="utf-8")
+    artifacts["ACCOUNTABILITIES.md"] = read_guide(SKILL / "references/accountabilities.md")
+    profile = read_guide(SKILL / "assets/role-profile.md")
     for role in roles:
-        artifacts[f"roles/{role}.md"] = profile.replace("[specialism]", role)
+        preset = SKILL / "assets/profiles" / f"{role}.md"
+        artifacts[f"roles/{role}.md"] = (
+            read_guide(preset) if preset.is_file()
+            else profile.replace("[specialism]", role)
+        )
     writes: dict[Path, str] = {}
     for rel, body in artifacts.items():
         target = state_dir / rel

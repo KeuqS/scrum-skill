@@ -6,7 +6,7 @@ A project-neutral skill for **Codex and Claude Code**. Invoke it to create or re
 
 The human Product Owner can work in any domain. Engineering, QA, design, security and domain reviewers are selected for the project. Legal counsel, specific models, frontend packages and vendor plugins are **optional**, not built-in requirements.
 
-Version **0.1.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+Version **0.2.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
 
 ## Start here
 
@@ -15,7 +15,7 @@ Choose **one** installation route to avoid duplicate skill names.
 ### Codex plugin
 
 ```sh
-codex plugin marketplace add kevanwee/scrum-skill --ref v0.1.0
+codex plugin marketplace add kevanwee/scrum-skill --ref v0.2.0
 codex plugin add scrum-skill@scrum-skills
 ```
 
@@ -46,7 +46,7 @@ For local development after cloning, `claude --plugin-dir /path/to/scrum-skill` 
 
 ### Direct skill folder
 
-Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.1.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
+Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.2.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
 
 Skills-only installation does not register a plugin, hooks or an agent runtime. See [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills). This repo publishes compatible metadata; it does not install anything into your account automatically.
 
@@ -88,18 +88,25 @@ One active Sprint, fixed length of one month or less. The team chooses a useful 
 ## Who does what?
 
 ```mermaid
-flowchart TB
-  PO["Human Product Owner: value, Product Goal, backlog order"]
-  SM["Scrum Master facilitation: effectiveness and impediments"]
-  Dev["Developers: one cross-functional, self-managing team"]
-  PO -->|Direction and tradeoffs| Dev
-  SM -->|Facilitate, coach and unblock| Dev
-  Dev -->|Evidence and feedback| PO
-  Profiles["Optional specialisms: engineering, QA, design,<br/>security and domain expertise as needed"]
-  Dev --- Profiles
+flowchart LR
+  subgraph Team["One Scrum Team — no sub-teams or internal hierarchy"]
+    direction LR
+    PO["One Product Owner<br/>Value, Product Goal and backlog order"]
+    Dev["Developers<br/>Decide who, when and how<br/>Engineering, QA, design and other skills"]
+    SM["One Scrum Master<br/>Scrum practice and team effectiveness"]
+    PO <-->|"Goal, priorities and tradeoffs / feasibility and feedback"| Dev
+    SM ---|"Coach self-management; help remove impediments"| Dev
+    SM ---|"Support goals, backlog and stakeholder collaboration"| PO
+  end
 ```
 
-AI workers assist these accountabilities; a generated role profile is not a human appointment, real stakeholder participation or regulated professional sign-off. The skill coordinates bounded tasks with file ownership, acceptance evidence and handoffs instead of pretending every agent is an independent employee.
+The Product Owner is one person; the Scrum Master serves the whole team. Developers own their plan, estimates and implementation choices. Layout and connecting lines express collaboration, not reporting authority. AI workers assist these accountabilities; a generated profile is not a human appointment, stakeholder participation or regulated professional sign-off. This package deliberately keeps a human accountable for product decisions.
+
+### Predefined behavior guides
+
+Read [accountability guides](skills/scrum-skill/references/accountabilities.md) for Product Owner, Scrum Master and Developers behavior and decision boundaries. [Role selection](skills/scrum-skill/references/roles.md) links presets for engineering, QA, UI/UX, security, optional Legal Counsel and PDPA/GDPR Counsel, AI/data, operations and domain review. Each preset describes its contribution, working approach, evidence and boundaries. Specialisms share one Definition of Done and collaborate throughout delivery.
+
+Setup copies selected presets into `.scrum/roles/`; unknown role names use the adaptable template. Existing profiles are preserved. These are portable instructions, not automatically registered agents. For example: `--specialists engineering,qa,design,security`; ask a delegated worker to read its profile, the shared DoD and its bounded task when delegation is authorized.
 
 ## Artifacts and commitments
 
@@ -152,6 +159,7 @@ project/
   .scrum/
     workspace.json          Skill version and project configuration
     TEAM.md, roles/         Adaptable specialist profiles
+    ACCOUNTABILITIES.md     Product Owner, Scrum Master and Developers behavior
     PRODUCT_GOAL.md, PRODUCT_BACKLOG.md, DEFINITION_OF_DONE.md
     DECISIONS.md, IMPEDIMENTS.md, EVIDENCE.md
     sprints/                Forecast, planning, review and retrospective
