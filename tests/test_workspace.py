@@ -35,7 +35,7 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(state["state"], "proposed")
         self.assertEqual(state["forecast_end"], "2026-11-01")
         self.assertEqual(state["specialists"], ["engineering", "qa"])
-        self.assertEqual(state["skill_version"], "0.2.1")
+        self.assertEqual(state["skill_version"], "0.2.2")
         self.assertIsNone(state["product_owner"])
         self.assertIsNone(state["scrum_master"])
         self.assertEqual(state["accountabilities"], "unresolved")

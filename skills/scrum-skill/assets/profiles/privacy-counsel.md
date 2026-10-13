@@ -12,6 +12,8 @@ translate them into testable data-handling outcomes with engineering/security.
 - Use the skill's references/legal-workflows.md for relevant LegalQuants regulatory,
   proposition-checking, DPA and local-first workflows. Check their supported scope;
   no Singapore-specific PDPA checklist is implied by a GDPR DPA review.
+- Resolve/load the selected skill through references/dependency-routing.md; record
+  observed use or missing prerequisites rather than treating a source link as invocation.
 - Translate verified requirements into minimization, access, retention/deletion,
   transfer and response controls as applicable. Counsel assesses legal sufficiency;
   engineering implements and QA/security verify behavior.

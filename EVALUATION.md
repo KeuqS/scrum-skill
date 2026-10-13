@@ -1,5 +1,29 @@
 # Evaluation record
 
+## Update - 0.2.2
+
+Legal Counsel now reviews platform/design choices, risks, options and safeguards.
+External routing explicitly separates selection, host availability, instruction/native
+loading and observed execution. No upstream skill/library source is bundled and no
+installer, agent registration or external invocation runtime is added.
+
+Local audit found an installed/readable Codex LQ regulatory resource, taste and Impeccable; this
+does not establish their availability in a fresh consumer or native Claude session.
+The standalone Claude CLI reported no installed plugins in the tested context.
+An installed GSAP library passed a paused object-tween midpoint/end smoke check;
+Lenis imported successfully in the existing development app. These are dependency
+checks, not evidence of scrum-skill automatically activating either workflow or of
+browser motion/scroll behavior. Full nested native-host activation remains untested.
+
+An independent planning exercise resolved taste's installed design-taste-frontend
+identity, read its instructions and relevant Impeccable guides, and produced a UI
+review plan. No actual UI/context or native command execution was claimed. The
+counsel exercise could not find the best-fit local-first/proposition-checking skills
+in the allowed host catalog/cache and used an explicitly manual evidence-first plan.
+Regulatory was available but deferred for missing jurisdiction/question and the
+planning-only scope. Other legacy LQ DPA/QC candidates were also unavailable in that
+scoped search. Sibling vendored sources were not treated as host availability.
+
 ## Update - 0.2.1
 
 Accountabilities default to unresolved instead of appointing the invoking user.

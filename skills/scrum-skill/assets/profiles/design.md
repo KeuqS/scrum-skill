@@ -28,6 +28,10 @@ This portable guide does not register an agent, create a sub-team or grant tool 
 
 ## Design tools and professional basis
 
+Follow the skill's references/dependency-routing.md to resolve the actual installed
+skill identities, load their instructions and record what was used. Source links do
+not establish availability; GSAP/Lenis are application libraries, not agent skills.
+
 For the software UI/UX preset, use the project selected [Impeccable](https://impeccable.style/) and [taste-skill](https://github.com/Leonxlnx/taste-skill) workflows when available and applicable. Read their installed instructions; taste-skill is oriented to landing/portfolio/redesign work, so do not force it onto every product screen.
 
 Use [GSAP](https://gsap.com/docs/v3/) for justified animation and [Lenis](https://github.com/darkroomengineering/lenis) when smooth scrolling is requested/appropriate. Respect reduced motion, keyboard/navigation semantics and performance. Follow actual project mandates; selecting this profile does not silently install packages/plugins/hooks. Report missing tools and use an approved fallback.
