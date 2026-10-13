@@ -1,7 +1,7 @@
 # Maintaining scrum-skill
 
 This repository contains a project-neutral Scrum skill and plugin packaging.
-Keep one canonical skill under skills/scrum-skill; host manifests must reference it.
+Keep one canonical source per skill under skills/; host manifests reference that directory.
 No supplied PDFs, restricted course extracts, project backlogs, stakeholder identities,
 credentials or private handoffs belong in this public repository.
 

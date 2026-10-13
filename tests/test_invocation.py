@@ -17,6 +17,12 @@ class InvocationTests(unittest.TestCase):
         self.assertEqual(result["mode"], "wizard")
         self.assertFalse(result["executes_actions"])
 
+    def test_dashboard_preserves_explicit_input_without_exporting(self):
+        result = router.resolve('dashboard --target ".scrum/metrics.json"')
+        self.assertEqual(result["mode"], "dashboard")
+        self.assertEqual(result["options"]["target"], ".scrum/metrics.json")
+        self.assertFalse(result["executes_actions"])
+
     def test_role_review_and_alias_preserve_target(self):
         result = router.resolve('role legal review --target "docs/platform choices"')
         self.assertEqual((result["role"], result["mode"]), ("legal-counsel", "review"))

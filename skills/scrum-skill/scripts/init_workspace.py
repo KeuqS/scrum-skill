@@ -138,8 +138,22 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
                    + (team or "- Sequential generalist mode; no spawned agents claimed.") +
                    "\n\nProfile selection is configurable; no legal qualification or vendor tool is required.\n",
         "PRODUCT_BACKLOG.md": "# Ordered Product Backlog\n\nState: refinement pending; no accepted items or estimates invented.\n\n"
-                              "| Order | ID | User outcome | Confirmation | Estimate/uncertainty | Evidence | State |\n"
-                              "| --- | --- | --- | --- | --- | --- | --- |\n",
+                              "| Order | ID | User outcome | Confirmation | Story points (number/null) | Estimate state/method | Uncertainty | Evidence | State |\n"
+                              "| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n"
+                              "\nUse ESTIMATES.md for actual estimate provenance; no points are assigned automatically.\n",
+        "ESTIMATES.md": "# Estimate decisions\n\nStory points are optional relative estimates, not hours.\n"
+                        "Planning Poker: clarify, vote privately, reveal together, discuss differences, re-vote.\n"
+                        "Record actual participants/votes/decision; AI proposals are not team agreement.\n\n"
+                        "| Item ID | Points (number/null) | Unestimated/proposed/agreed | Method | Actual participants and decision source | Date | Uncertainty/reference |\n"
+                        "| --- | --- | --- | --- | --- | --- | --- |\n",
+        "SCOPE_HISTORY.md": "# Scope and Sprint snapshots\n\nNo historical snapshots or velocity invented.\n"
+                            "Record added/removed/re-estimated points and stable item IDs at each Sprint snapshot.\n"
+                            "Freeze DoD-complete items/points when a Sprint closes; unfinished items earn no partial points.\n"
+                            "Do not change closed history when current estimates change. Retired split parents are excluded.\n"
+                            "metrics.json is an explicit dashboard input, not an automatic Markdown synchronization.\n",
+        "metrics.json": json.dumps({"schema_version": 1,
+                                    "project": {"name": name, "goal": goal, "data_kind": "project"},
+                                    "backlog": [], "sprints": []}, indent=2) + "\n",
         "DEFINITION_OF_DONE.md": "# Shared Definition of Done\n\nState: proposed; tailor to product and organization standards.\n\n"
                                  "- Observable acceptance outcomes and usable integrated behavior.\n"
                                  "- Applicable project tests/checks and required reviews evidenced at exact revision.\n"
@@ -169,6 +183,7 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
                               "Read INITIAL.md, ../TEAM.md, ../PRODUCT_GOAL.md, ../PRODUCT_BACKLOG.md and ../MASTER_PROMPT.md.\n",
         "MASTER_PROMPT.md": "# Fresh-session entrypoint\n\nRead project AGENTS.md and this workspace's TEAM, Goal, backlog, DoD and handoffs/LATEST.\n"
                             "Read ACCOUNTABILITIES.md and selected role profiles when taking on work.\n"
+                            "Read ESTIMATES.md and SCOPE_HISTORY.md when estimating or inspecting project metrics.\n"
                             "Inspect actual files/revision/evidence before resuming. Reconcile stale status rather than reinitializing.\n"
                             "Respect user/project permissions; do not infer agreement, test success or human judgment.\n"
                             "Refine the first usable slice and start it only when delivery is requested.\n",

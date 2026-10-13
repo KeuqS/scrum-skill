@@ -11,7 +11,7 @@ A project-neutral skill for **Codex and Claude Code**. Invoke it to create or re
 
 The human Product Owner can work in any domain. Engineering, QA, design, security and domain reviewers are selected for the project. Legal counsel, specific models, frontend packages and vendor plugins are **optional**, not built-in requirements.
 
-Version **0.4.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+Version **0.5.0** · MIT · Two skills: [`scrum-skill`](skills/scrum-skill/SKILL.md) and [`scrum-dashboard`](skills/scrum-dashboard/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
 
 ## See what it creates
 
@@ -27,7 +27,7 @@ Choose **one** installation route to avoid duplicate skill names.
 ### Codex plugin
 
 ```sh
-codex plugin marketplace add kevanwee/scrum-skill --ref v0.4.0
+codex plugin marketplace add kevanwee/scrum-skill --ref v0.5.0
 codex plugin add scrum-skill@scrum-skills
 ```
 
@@ -58,7 +58,7 @@ For local development after cloning, `claude --plugin-dir /path/to/scrum-skill` 
 
 ### Direct skill folder
 
-Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.4.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
+Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.5.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
 
 Skills-only installation does not register a plugin, hooks or an agent runtime. See [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills). This repo publishes compatible metadata; it does not install anything into your account automatically.
 
@@ -91,6 +91,44 @@ $scrum-skill Run a retrospective and propose a few measurable improvements.
 ```
 
 Use `/scrum-skill:scrum-skill` for the plugin version in Claude Code. Setup/planning creates artifacts; it does not by itself authorize implementation, pushes, deployment or messages. If your host cannot delegate, the coordinator works sequentially and records that mode.
+
+## Project dashboard and estimation
+
+The plugin includes an offline dashboard skill. Direct folder installations must also
+copy `skills/scrum-dashboard/` into the host's skill directory to use it.
+
+```text
+$scrum-skill dashboard
+$scrum-dashboard Generate a local dashboard from .scrum/metrics.json.
+```
+
+Claude plugin: `/scrum-skill:scrum-dashboard`. The dashboard shows **project burndown
+by Sprint**, completed Sprint velocity, changing backlog scope, progress and a dated
+Gantt timeline. It has no daily chart or separate burnup. Missing dates, estimates and
+history remain visible; agent speed does not invent a two-week calendar.
+
+[Dashboard schema and commands](skills/scrum-dashboard/references/schema.md) explain
+how to supply snapshots. New workspaces start with an empty `metrics.json`; the helper
+does not infer history from Markdown. Generate a labeled synthetic demo with:
+
+```sh
+python skills/scrum-dashboard/scripts/generate_dashboard.py --demo --output demo.html
+```
+
+[Preview the synthetic dashboard](assets/dashboard-demo.png).
+
+Open the resulting HTML locally. It needs no server or external libraries and embeds
+all input data, so sharing it shares that data.
+
+Stories now have explicit point/estimate-state fields and an estimate decision ledger.
+[Estimation and Planning Poker](skills/scrum-skill/references/estimation.md) cover actual
+participants, private votes, discussion and agreement, provisional agent estimates,
+capacity, unfinished work and frozen historical velocity. Points and Planning Poker
+are supporting practices, not mandatory Scrum rules.
+
+[Project lifecycle guide](skills/scrum-skill/references/project-lifecycle.md) connects
+discovery, refinement, delivery, reviews, releases and operational handover.
+[Workflow review](docs/WORKFLOW_REVIEW.md) records coverage and remaining limits.
 
 ## Scrum at a glance
 

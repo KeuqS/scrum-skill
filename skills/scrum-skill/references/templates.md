@@ -17,6 +17,9 @@ As a [abstract user role], I want [action], so that [outcome].
 Conversation: actual clarification, assumptions and responsible decision-maker.
 Confirmation: observable happy/negative/boundary scenarios, evidence and scope.
 Estimate/uncertainty: Developers' forecast, not an AI-invented promise.
+Story points: number/null; unestimated/proposed/agreed state; method, actual
+participants/votes, reference item, decision/source/date and estimate-change history.
+Use [estimation guidance](estimation.md); never invent Planning Poker or treat null as zero.
 
 ## Shared Definition of Done
 
@@ -31,6 +34,8 @@ Actual participants/inputs and whether this is preparation or an event; proposed
 agreed state; Product Goal; one Sprint Goal; why/what/how; dates/timebox; capacity and
 assumptions; selected slices/dependencies/estimates; DoD version; deferred scope and
 open decisions. Developers own their plan; PO owns backlog ordering and value.
+Capture original scope baseline, selected story IDs/point snapshots and capacity
+assumptions; preserve revisions when items are added, removed, split or reestimated.
 
 ## Daily adaptation
 
@@ -43,6 +48,8 @@ never fabricate attendance or three-question status theater.
 Actual participants/feedback state; Goal; integrated revision/DoD; Done outcomes and
 demonstration evidence; changed circumstances; backlog adaptation. Unfinished items
 are status/return-to-backlog, not an Increment demo. Include applicable release state.
+Freeze completed-Sprint DoD-only velocity and explicit scope/completion snapshot;
+keep carryover IDs and scope deltas, unknown history and actual feedback distinct.
 
 ## Retrospective
 
