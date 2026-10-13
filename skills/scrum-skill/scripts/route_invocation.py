@@ -25,7 +25,11 @@ class Parser(argparse.ArgumentParser):
 
 
 def resolve(request: str) -> dict:
-    tokens = shlex.split(request)
+    lexer = shlex.shlex(request, posix=True)
+    lexer.whitespace_split = True
+    lexer.commenters = ""
+    lexer.escape = ""  # Windows paths and all argument values remain literal data.
+    tokens = list(lexer)
     role, mode = "scrum-master", "wizard"
     if tokens and tokens[0] == "role":
         tokens.pop(0)
@@ -39,15 +43,18 @@ def resolve(request: str) -> dict:
     elif tokens and tokens[0] in MODES:
         mode = tokens.pop(0)
     elif tokens:
-        if len(tokens) == 1 or tokens[0].startswith("--"):
+        if len(tokens) == 1 or any(token.startswith("--") for token in tokens):
             raise ValueError("unknown command; use wizard or a supported workflow mode")
         return {"mode": "natural-language", "role": role, "request": request,
                 "intent_resolution_required": True, "executes_actions": False}
-    parser = Parser(add_help=False)
+    if tokens and not any(token.startswith("--") for token in tokens):
+        return {"mode": mode, "role": role, "request": request,
+                "intent_resolution_required": True, "executes_actions": False}
+    parser = Parser(add_help=False, allow_abbrev=False)
     for field in ("goal", "target", "project", "roles", "cadence", "profile"):
         parser.add_argument("--" + field)
     options = vars(parser.parse_args(tokens))
-    if options["roles"]:
+    if options["roles"] is not None:
         roles = [part.strip() for part in options["roles"].split(",")]
         if any(not re.fullmatch(r"[a-z][a-z0-9-]{0,47}", item) for item in roles) or len(set(roles)) != len(roles):
             raise ValueError("roles must be distinct lowercase slugs")

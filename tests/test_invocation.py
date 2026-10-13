@@ -39,6 +39,23 @@ class InvocationTests(unittest.TestCase):
         self.assertTrue(router.resolve("Resume from the latest handoff")["intent_resolution_required"])
         self.assertEqual(router.resolve("role domain-reviewer plan --profile roles/garden.md")["options"]["profile"], "roles/garden.md")
 
+    def test_windows_paths_are_literal_with_or_without_grouping_quotes(self):
+        for request in [r'plan --target C:\work\garden\ci.yml',
+                        r'plan --target "C:\work\my garden\ci.yml"']:
+            result = router.resolve(request)
+            expected = r"C:\work\my garden\ci.yml" if '"' in request else r"C:\work\garden\ci.yml"
+            self.assertEqual(result["options"]["target"], expected)
+
+    def test_explicit_typos_abbreviations_and_empty_roles_fail(self):
+        for request in ["plna --target US-7", "plan --goa garden", 'setup --roles ""']:
+            with self.subTest(request=request), self.assertRaises(ValueError):
+                router.resolve(request)
+
+    def test_plain_language_after_a_mode_keeps_its_scope(self):
+        result = router.resolve("role legal review the platform design choices")
+        self.assertEqual((result["role"], result["mode"]), ("legal-counsel", "review"))
+        self.assertTrue(result["intent_resolution_required"])
+
 
 if __name__ == "__main__":
     unittest.main()
