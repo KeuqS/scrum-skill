@@ -1,6 +1,9 @@
 import importlib.util
 from pathlib import Path
 import unittest
+import json
+import subprocess
+import sys
 
 path = Path(__file__).resolve().parents[1] / "skills/scrum-skill/scripts/route_invocation.py"
 spec = importlib.util.spec_from_file_location("invocation", path)
@@ -61,6 +64,13 @@ class InvocationTests(unittest.TestCase):
         self.assertEqual(router.resolve(request)["request"], request)
         result = router.resolve("role legal review the platform's design choices")
         self.assertEqual((result["role"], result["mode"]), ("legal-counsel", "review"))
+
+    def test_cli_stdin_preserves_quoted_windows_target(self):
+        request = r'role legal review --target "C:\work\my garden\ci.yml"'
+        result = subprocess.run([sys.executable, str(path), "--stdin"], input=request,
+                                capture_output=True, text=True, check=True)
+        data = json.loads(result.stdout)
+        self.assertEqual(data["options"]["target"], r"C:\work\my garden\ci.yml")
 
 
 if __name__ == "__main__":

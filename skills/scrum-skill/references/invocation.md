@@ -80,3 +80,8 @@ installation, delegation or deployment. Typos in explicit role/mode/flags fail w
 helpful errors; multiword natural-language requests remain supported for agent intent
 resolution. The agent may resolve equivalent intent directly when Python is absent.
 Never evaluate argument values as code or interpolate them into a shell command.
+
+If a shell rewrites embedded quotation marks, pass the request via stdin instead:
+`python <skill-dir>/scripts/route_invocation.py --stdin`. In PowerShell, pipe a
+single-quoted here-string containing the request; in Bash use a quoted heredoc.
+Use the host's appropriate text encoding. This avoids native argument reconstruction.

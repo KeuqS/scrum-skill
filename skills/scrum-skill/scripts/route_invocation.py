@@ -90,7 +90,10 @@ if __name__ == "__main__":
         # One request string avoids shell reconstruction and preserves quoted values.
         if len(sys.argv) > 2:
             raise ValueError("pass one quoted invocation argument string")
-        print(json.dumps(resolve(sys.argv[1] if len(sys.argv) == 2 else ""), indent=2))
+        request = sys.argv[1] if len(sys.argv) == 2 else ""
+        if request == "--stdin":
+            request = sys.stdin.read()
+        print(json.dumps(resolve(request), indent=2))
     except ValueError as error:
         print(f"scrum-skill routing: {error}", file=sys.stderr)
         raise SystemExit(2)
