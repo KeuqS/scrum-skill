@@ -18,6 +18,10 @@ AGENTS.md and CLAUDE.md get a small marked pointer block, preserving prior text.
 Existing records are never overwritten. Conflicting project identity is an error,
 not silent reinitialization. Symlink escapes and filesystem conflicts fail preflight.
 
+ACCOUNTABILITIES.md explains Product Owner, Scrum Master and Developers behavior.
+Selected known roles get maintained behavior presets, not blank placeholders;
+custom slugs use the adaptable template. Existing profiles remain untouched.
+
 Use --specialists engineering,qa,design for chosen profiles, or --specialists none
 for a sequential generalist. The helper's default engineering,qa is an example
 software team, not a Scrum requirement. --sprint-days 14 is the default calendar

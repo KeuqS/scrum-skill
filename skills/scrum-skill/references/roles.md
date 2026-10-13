@@ -4,6 +4,10 @@ Scrum has Product Owner, Scrum Master and Developers accountabilities. Specialis
 are not additional Scrum accountabilities or sub-team hierarchies. AI execution aids
 the accountable human; this package does not create autonomous human responsibility.
 
+Read [accountability behavior](accountabilities.md) for the three accountabilities.
+The whole Scrum Team is self-managing; the Scrum Master serves it, and the PO orders
+value/outcomes while Developers decide how work gets done.
+
 | Accountability | Decisions and work | AI assistance |
 | --- | --- | --- |
 | Product Owner | Product Goal, value, backlog order and stakeholder tradeoffs | Draft/refine options; never invent the person's agreement |
@@ -35,3 +39,28 @@ The coordinator facilitates scope negotiation rather than assigning an inflexibl
   regulated human sign-off from an agent review.
 
 Use the optional template in assets/role-profile.md for custom specialisms.
+
+## Selectable presets
+
+| Helper slug | Behavior guide copied into the project |
+| --- | --- |
+| engineering | [Architecture, implementation and integration](../assets/profiles/engineering.md) |
+| qa | [Risk-based verification and CI evidence](../assets/profiles/qa.md) |
+| design | [User flows, accessibility and interaction](../assets/profiles/design.md) |
+| security | [Threats, data boundaries and controls](../assets/profiles/security.md) |
+| ai | [Model/data pipeline and evaluation](../assets/profiles/ai.md) |
+| operations | [Delivery, reliability and recovery](../assets/profiles/operations.md) |
+| domain-reviewer | [Domain evidence and decision limits](../assets/profiles/domain-reviewer.md) |
+| legal-counsel | [Optional legal review and LQ workflow routing](../assets/profiles/legal-counsel.md) |
+| privacy-counsel | [Optional PDPA/GDPR assessment](../assets/profiles/privacy-counsel.md) |
+
+The helper uses an exact slug match; custom slugs get the generic profile template.
+Tailor the copied profile with owned scope, criteria, dependencies and the current
+handoff path before work. Presets do not activate agents or install named tools.
+Existing project profiles are preserved; upgrading the skill does not rewrite them.
+
+Core software preset: Scrum Master assistance plus engineering, design, QA and security
+contributions; the user remains the Product Owner. These do not require legal or LQ
+skills. Add legal-counsel and/or privacy-counsel only when the project needs them;
+read [legal workflow routing](legal-workflows.md) only for those tasks. AI and operations
+are optional extensions, not a requirement to increase team size.

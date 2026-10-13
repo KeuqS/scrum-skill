@@ -44,8 +44,14 @@ Never move project-private content into another repo merely to improve this skil
 ## Choose a team that fits
 
 Read [accountabilities and role profiles](references/roles.md).
+Read [behavior and decision boundaries](references/accountabilities.md) when adopting
+an accountability; use only the selected specialist presets linked from role guidance.
 The user is the human Product Owner unless another accountable person is identified.
-Use one cross-functional Developers team. Engineering and QA are useful software
+Use one cross-functional Developers team. Specialist profiles are contributions
+within that team, not subordinate teams or additional accountabilities.
+The Scrum Master serves the whole team, not as its task manager. The Product Owner
+orders value and outcomes; Developers decide who does what, when and how.
+Engineering and QA are useful software
 specialisms; add design for UI, security for relevant risks, and domain experts when
 needed. Legal counsel, AI engineering, vendor skills and specific packages are optional.
 Do not impose a previous project's domain, roles, model pipeline or release policy.

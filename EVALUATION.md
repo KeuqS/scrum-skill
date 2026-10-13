@@ -1,5 +1,22 @@
 # Evaluation — 0.1.0
 
+## Update — 0.2.0
+
+The team diagram and accountability guides now make self-management, one team and
+Product Owner/Developers decision boundaries explicit. Nine selectable specialist
+presets add working approach, evidence, boundaries and professional source links.
+LegalQuants routing is confined to optional legal/privacy work; technical presets
+carry no LQ requirements. Existing copied profiles remain unchanged during setup.
+
+Three new regression cases exercise preset copying/customization preservation,
+custom-role fallback and accountability guidance without specialists. This extends
+the package suite to twenty-one tests. Windows skips the symlink test when its
+creation privilege is unavailable; hosted results are recorded in the release PR.
+These checks do not demonstrate actual legal sign-off, live LQ activation or full
+host conversation behavior. The independent 0.1.0 exercise below remains the baseline.
+
+## Initial baseline
+
 These checks establish a limited, observable baseline. They do not certify Scrum
 facilitation or demonstrate a live installed conversation on every host.
 
