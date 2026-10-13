@@ -46,6 +46,9 @@ Never move project-private content into another repo merely to improve this skil
 Read [accountabilities and role profiles](references/roles.md).
 Read [behavior and decision boundaries](references/accountabilities.md) when adopting
 an accountability; use only the selected specialist presets linked from role guidance.
+For a role's external skills/libraries, follow [dependency routing](references/dependency-routing.md):
+resolve what this host actually provides, load the selected instructions, perform the
+authorized workflow and record actual execution or missing prerequisites.
 Use the Product Owner and Scrum Master identified by the user or existing project
 records. Otherwise mark the accountability unresolved; invoking the skill does not
 appoint the user or an AI. Keep unresolved setups explicitly Scrum-informed.

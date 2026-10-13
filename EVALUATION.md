@@ -1,5 +1,20 @@
 # Evaluation record
 
+## Update - 0.2.2
+
+Legal Counsel now reviews platform/design choices, risks, options and safeguards.
+External routing explicitly separates selection, host availability, instruction/native
+loading and observed execution. No upstream skill/library source is bundled and no
+installer, agent registration or external invocation runtime is added.
+
+Local audit found installed/readable Codex LQ, taste and Impeccable resources; this
+does not establish their availability in a fresh consumer or native Claude session.
+The standalone Claude CLI reported no installed plugins in the tested context.
+An installed GSAP library passed a paused object-tween midpoint/end smoke check;
+Lenis imported successfully in the existing development app. These are dependency
+checks, not evidence of scrum-skill automatically activating either workflow or of
+browser motion/scroll behavior. Full nested native-host activation remains untested.
+
 ## Update - 0.2.1
 
 Accountabilities default to unresolved instead of appointing the invoking user.

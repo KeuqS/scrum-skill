@@ -7,25 +7,28 @@ Resolve the installed host's actual skill name/path; read the selected SKILL.md
 and follow its inputs, scope and approval requirements. If absent, report the gap
 and use an evidence-first manual workflow or install only within user authorization.
 
-## Legal Counsel
+## Legal Counsel - platform/design decisions
 
-Start with jurisdiction, decision/question, relevant facts and source access.
-Turn the needed review into a small outcome with evidence and named decision owner.
+Start with the proposed behavior, users, applicable jurisdictions, factual evidence
+and the decision needing advice. Identify relevant platform risks, compare safeguards
+and give the PO/accountable counsel a source-backed recommendation. Record the design
+revision, source, risk, options, decision owner and residual issue in a risk register/ADR.
+Follow [dependency routing](dependency-routing.md) to resolve/load actual installed skills.
 
-| Actual task | Reusable LQ workflow | Important boundary |
+| Actual task | Candidate LQ workflow | Boundary |
 | --- | --- | --- |
-| Current regulatory requirements/version comparison | [regulatory](https://github.com/LegalQuants/lq-plugin-oss/blob/main/skills/core/regulatory/SKILL.md) | Official instrument/version evidence; unresolved application judgments stay with counsel |
-| Whether a source supports a proposition | [proposition-checking](https://github.com/LegalQuants/lq-skills/blob/main/skills/proposition-checking/SKILL.md) | Missing source means unverified, not supported from memory |
-| Singapore judgments/citations | [sgcite](https://github.com/LegalQuants/lq-skills/blob/main/skills/sgcite/SKILL.md) | Singapore-specific; verify sources, not merely citation shape |
-| Singapore statutory citations | [bart-statutory-reference-checker](https://github.com/LegalQuants/lq-skills/blob/main/skills/bart-statutory-reference-checker/SKILL.md) | Optional tooling/infrastructure; do not claim a deployed checker from a skill file |
-| Contract policy from lawyer-selected precedents | [playbook-builder](https://github.com/LegalQuants/lq-plugin-oss/blob/main/skills/transactional/playbook-builder/SKILL.md) | Candidate positions need actual lawyer confirmation |
-| Contract against approved policy | [playbook-review](https://github.com/LegalQuants/lq-plugin-oss/blob/main/skills/transactional/playbook-review/SKILL.md) | Approved playbook, clause-linked coverage; issues list does not create a Word redline |
-| Defined-term consistency | [definition-check](https://github.com/LegalQuants/lq-plugin-oss/blob/main/skills/transactional/definition-check/SKILL.md) | Record supplied text and evidence rather than inventing missing terms |
-| Substantive legal-output challenge | [adversarial-qc](https://github.com/LegalQuants/lq-skills/blob/main/skills/adversarial-qc/SKILL.md) | Use only authorized/available agents/providers; disclose actual independence; no professional sign-off |
+| Whether a proposed platform activity/design falls under a rule | [regulatory](https://github.com/LegalQuants/lq-plugin-oss/blob/main/skills/core/regulatory/SKILL.md) | Actual facts/jurisdiction and official instrument/version; unresolved judgment stays with counsel |
+| Whether authority supports a platform-risk/design proposition | [proposition-checking](https://github.com/LegalQuants/lq-skills/blob/main/skills/proposition-checking/SKILL.md) | Source unavailable means unverified, not a legal conclusion from memory |
+| What leaves a legal AI workspace and related privacy/confidentiality risk | [local-first-legal-workspace](https://github.com/LegalQuants/lq-skills/blob/main/skills/local-first-legal-workspace/SKILL.md) | Observe actual architecture/runtime; missing evidence yields a plan and unknowns |
+| Provider processing terms for a design/vendor decision | [dpa-checklist-review](https://github.com/LegalQuants/lq-skills/blob/main/skills/dpa-checklist-review/SKILL.md) | Supplied agreement, identified supported regime and party roles; privacy counsel collaborates |
+| Challenge a substantive counsel risk analysis | [adversarial-qc](https://github.com/LegalQuants/lq-skills/blob/main/skills/adversarial-qc/SKILL.md) | Only authorized agents/providers; disclose actual independence; no professional sign-off |
 
-Litigation-specific plugins/workflows apply only to litigation tasks; do not silently
-import US procedure into another jurisdiction. This map references source skill names;
-installations may display `lq-` aliases or plugin namespaces.
+For citations used in the decision memo, Singapore-specific sgcite and
+bart-statutory-reference-checker are candidates only when relevant. For actual
+vendor/customer terms, approved playbook review or defined-term checking may help
+that document review. Apply the installed skill's prerequisites; transaction and
+litigation workflows are selected by the actual question, not automatically by role.
+These are source skill names; installations may expose lq- aliases or plugin namespaces.
 
 ## PDPA/GDPR Counsel
 
