@@ -25,6 +25,26 @@ class Parser(argparse.ArgumentParser):
 
 
 def resolve(request: str) -> dict:
+    # Ordinary prose isn't a shell expression: possessive apostrophes are literal.
+    if not re.search(r"(?:^|\s)--[A-Za-z]", request):
+        words = request.split()
+        if len(words) > 1:
+            prose_role, prose_mode = "scrum-master", "natural-language"
+            if words[0] == "role":
+                if words[1] not in ALIASES:
+                    raise ValueError("role requires a known role name; see invocation guide")
+                prose_role = ALIASES[words[1]]
+                if len(words) > 2 and words[2] not in MODES:
+                    raise ValueError("unknown workflow mode")
+                if len(words) > 3:
+                    prose_mode = words[2]
+                else:
+                    words = []  # Let the structured role-only/bare-mode route handle it.
+            elif words[0] in MODES:
+                prose_mode = words[0]
+            if words:
+                return {"mode": prose_mode, "role": prose_role, "request": request,
+                        "intent_resolution_required": True, "executes_actions": False}
     lexer = shlex.shlex(request, posix=True)
     lexer.whitespace_split = True
     lexer.commenters = ""

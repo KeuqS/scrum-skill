@@ -56,6 +56,12 @@ class InvocationTests(unittest.TestCase):
         self.assertEqual((result["role"], result["mode"]), ("legal-counsel", "review"))
         self.assertTrue(result["intent_resolution_required"])
 
+    def test_possessive_apostrophes_are_literal_in_natural_language(self):
+        request = "Resume from the project's latest handoff and reconcile the actual state."
+        self.assertEqual(router.resolve(request)["request"], request)
+        result = router.resolve("role legal review the platform's design choices")
+        self.assertEqual((result["role"], result["mode"]), ("legal-counsel", "review"))
+
 
 if __name__ == "__main__":
     unittest.main()
