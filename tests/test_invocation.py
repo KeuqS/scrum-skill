@@ -1,0 +1,44 @@
+import importlib.util
+from pathlib import Path
+import unittest
+
+path = Path(__file__).resolve().parents[1] / "skills/scrum-skill/scripts/route_invocation.py"
+spec = importlib.util.spec_from_file_location("invocation", path)
+router = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(router)
+
+
+class InvocationTests(unittest.TestCase):
+    def test_bare_call_is_wizard_without_actions(self):
+        result = router.resolve("")
+        self.assertEqual(result["mode"], "wizard")
+        self.assertFalse(result["executes_actions"])
+
+    def test_role_review_and_alias_preserve_target(self):
+        result = router.resolve('role legal review --target "docs/platform choices"')
+        self.assertEqual((result["role"], result["mode"]), ("legal-counsel", "review"))
+        self.assertEqual(result["options"]["target"], "docs/platform choices")
+        self.assertEqual(router.resolve("role ux plan")["role"], "design")
+
+    def test_goal_roles_and_shell_text_remain_data(self):
+        result = router.resolve('setup --goal "$(whoami); harmless text" --roles engineering,qa')
+        self.assertEqual(result["options"]["goal"], "$(whoami); harmless text")
+        self.assertEqual(result["options"]["roles"], ["engineering", "qa"])
+
+    def test_bad_explicit_requests_fail(self):
+        for request in ["role", "role enginer review", "role design deploy", "plna",
+                        "plan --unknown x", "setup --roles qa,qa", "setup --roles ../private",
+                        'setup --goal "unterminated']:
+            with self.subTest(request=request), self.assertRaises(ValueError):
+                router.resolve(request)
+
+    def test_role_only_opens_scoped_wizard(self):
+        self.assertEqual(router.resolve("role security")["mode"], "wizard")
+
+    def test_natural_language_and_custom_profile(self):
+        self.assertTrue(router.resolve("Resume from the latest handoff")["intent_resolution_required"])
+        self.assertEqual(router.resolve("role domain-reviewer plan --profile roles/garden.md")["options"]["profile"], "roles/garden.md")
+
+
+if __name__ == "__main__":
+    unittest.main()

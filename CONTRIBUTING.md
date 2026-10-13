@@ -1,5 +1,10 @@
 # Contributing
 
+Start with a [good first issue](https://github.com/kevanwee/scrum-skill/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22good%20first%20issue%22)
+or propose an invented, reproducible workflow improvement. Useful contributions include
+host-specific setup evidence, non-software examples, accessible docs and routing edge cases.
+Discuss larger changes in an issue first; keep PRs focused and state what was actually tested.
+
 Propose small behavior-backed changes. Keep one canonical skill and compatible host
 manifests. Test with invented inputs in an isolated workspace; never upload project
 plans, original reference PDFs or actual stakeholder data as a reproduction.
