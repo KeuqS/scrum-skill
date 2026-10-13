@@ -7,7 +7,7 @@ standard-library resolver returns intent only; it never installs, delegates or
 executes project work. Six new cases cover wizard defaults, scoped reviews/aliases,
 quoted data, invalid requests, scoped wizard and natural-language/custom profiles.
 Three further cases cover Windows literal paths, strict flags/explicit typos and
-plain-language mode scope. The suite now has thirty-four tests; Windows may skip
+plain-language mode scope. An additional case covers ordinary prose apostrophes. The suite now has thirty-five tests; Windows may skip
 the symlink privilege case.
 Parser tests do not prove native host argument forwarding or a live wizard conversation.
 
