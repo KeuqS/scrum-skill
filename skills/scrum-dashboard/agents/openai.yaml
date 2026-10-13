@@ -1,0 +1,6 @@
+interface:
+  display_name: "Scrum Dashboard"
+  short_description: "View sprint progress, scope and evidence locally"
+  default_prompt: "Use $scrum-dashboard to generate a local dashboard from our recorded sprint history, keeping missing data explicit."
+policy:
+  allow_implicit_invocation: true

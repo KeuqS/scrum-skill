@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "project": {"name": "Community garden", "goal": "Prepare an accessible shared garden plan", "data_kind": "synthetic"},
+  "backlog": [
+    {"id":"A","title":"Review community needs","points":8,"status":"done","dod_met":true},
+    {"id":"B","title":"Compare accessible layouts","points":13,"status":"done","dod_met":true},
+    {"id":"C","title":"Plan seasonal planting","points":13,"status":"in_progress","dod_met":false},
+    {"id":"D","title":"Prepare volunteer guide","points":8,"status":"backlog","dod_met":false},
+    {"id":"E","title":"Investigate rainwater options","points":null,"status":"backlog","dod_met":false}
+  ],
+  "sprints": [
+    {"id":"S1","label":"Sprint 1","state":"completed","snapshot":{"scope_points":34,"completed_points":8,"unestimated_count":0},"velocity_items":[{"id":"A","points":8,"dod_met":true}],"scope_changes":{"added_points":0,"removed_points":0,"reestimated_delta":0},"timeline":[{"title":"Community needs","start_date":"2026-09-01","end_date":"2026-09-10","kind":"actual"}]},
+    {"id":"S2","label":"Sprint 2","state":"completed","snapshot":{"scope_points":47,"completed_points":21,"unestimated_count":1},"velocity_items":[{"id":"B","points":13,"dod_met":true}],"scope_changes":{"added_points":8,"removed_points":0,"reestimated_delta":5},"timeline":[{"title":"Accessible layouts","start_date":"2026-09-12","end_date":"2026-09-25","kind":"actual"}]},
+    {"id":"S3","label":"Sprint 3","state":"active","snapshot":{"scope_points":42,"completed_points":21,"unestimated_count":1},"scope_changes":{"added_points":0,"removed_points":5,"reestimated_delta":0},"timeline":[{"title":"Seasonal plan","start_date":"2026-10-01","end_date":"2026-10-20","kind":"forecast"},{"title":"Rainwater investigation","kind":"forecast"}]}
+  ]
+}
