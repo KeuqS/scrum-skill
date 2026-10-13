@@ -32,6 +32,17 @@ def read_guide(path: Path) -> str:
         return stream.read()
 
 
+def identity(value: str | None) -> str | None:
+    """Only supplied identities count; legacy assumptions remain unresolved."""
+    if value is None:
+        return None
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError("accountability identity must be a non-empty supplied label")
+    if value.strip() in {"unresolved", "human user (confirm identity if needed)"}:
+        return None
+    return value.strip()
+
+
 def specialists(value: str) -> list[str]:
     if value == "none":
         return []
@@ -66,7 +77,8 @@ def append_block(existing: str, block: str) -> str:
 
 
 def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
-         sprint_days: int) -> dict[Path, str]:
+         sprint_days: int, product_owner: str | None = None,
+         scrum_master: str | None = None) -> dict[Path, str]:
     """Preflight every destination, then return only necessary writes."""
     root = root.resolve()
     if not root.is_dir():
@@ -75,6 +87,7 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
         raise ValueError("project name and goal must be non-empty")
     if not 1 <= sprint_days <= 31:
         raise ValueError("sprint-days must be between 1 and 31")
+    product_owner, scrum_master = identity(product_owner), identity(scrum_master)
     state_dir = root / ".scrum"
     ensure_inside(root, state_dir)
     manifest = state_dir / "workspace.json"
@@ -89,6 +102,8 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
             roles = specialists(",".join(prior["specialists"])) if prior["specialists"] else []
             start = date.fromisoformat(prior["forecast_start"])
             sprint_days = prior["sprint_days"]
+            product_owner = identity(prior.get("product_owner"))
+            scrum_master = identity(prior.get("scrum_master"))
             if not isinstance(goal, str) or not goal.strip() or not isinstance(sprint_days, int):
                 raise ValueError("invalid existing workspace metadata")
         except (KeyError, TypeError) as error:
@@ -103,7 +118,9 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
     end = start + timedelta(days=sprint_days - 1)
 
     state = {"skill_version": VERSION, "project_name": name, "product_goal": goal,
-             "product_owner": "human user (confirm identity if needed)",
+             "product_owner": product_owner, "scrum_master": scrum_master,
+             "accountabilities": "identified" if product_owner and scrum_master else "unresolved",
+             "framework_status": "Scrum-informed preparation; actual constitution/events not established",
              "specialists": roles, "sprint_days": sprint_days,
              "forecast_start": start.isoformat(), "forecast_end": end.isoformat(),
              "state": "proposed", "authorization": "setup only; use actual user instructions"}
@@ -111,10 +128,12 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
     artifacts = {
         "workspace.json": json.dumps(state, indent=2) + "\n",
         "PRODUCT_GOAL.md": f"# Product Goal\n\n{goal}\n\nState: user-supplied direction; scope/refinement pending.\n",
-        "TEAM.md": "# Team agreement\n\nOne Scrum Team; no sub-teams or internal hierarchy.\n"
-                   "One Product Owner (human): accountable for value, Product Goal and backlog ordering.\n"
-                   "One Scrum Master: serves the whole team; coaches Scrum/self-management and helps remove impediments.\n"
+        "TEAM.md": "# Proposed team agreement\n\nTarget: one Scrum Team; no sub-teams or internal hierarchy.\n"
+                   f"Product Owner: {product_owner or 'unresolved'}; accountable for value, Product Goal and backlog management.\n"
+                   f"Scrum Master: {scrum_master or 'unresolved'}; accountable for team effectiveness and establishing Scrum.\n"
                    "Developers: cross-functional; own plan/estimates and decide who does what, when and how.\n"
+                   "Mode: Scrum-informed preparation; identities do not establish actual constitution/events.\n"
+                   "AI assists; it does not hold or fabricate human Scrum accountability.\n"
                    "Read ACCOUNTABILITIES.md; profiles are skills within Developers, not separate teams.\n\n"
                    + (team or "- Sequential generalist mode; no spawned agents claimed.") +
                    "\n\nProfile selection is configurable; no legal qualification or vendor tool is required.\n",
@@ -140,7 +159,7 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
         "sprints/SPRINT-01-PLANNING.md": "# Sprint Planning preparation\n\nState: preparation only; no attendees or agreement invented.\n"
                                          "Record Product/Sprint Goal, selected outcomes, delivery plan, forecasts/risks and actual decision evidence.\n",
         "sprints/SPRINT-01-REVIEW.md": "# Sprint Review preparation\n\nState: not held; no Done Increment or stakeholder feedback claimed.\n"
-                                      "Inspect Done outcomes/quality evidence, real feedback and backlog adaptations; unfinished items return to the backlog.\n",
+                                      "Inspect Done outcomes/quality evidence, real feedback and backlog adaptations; at Sprint end, unfinished items return to the backlog.\n",
         "sprints/SPRINT-01-RETROSPECTIVE.md": "# Retrospective preparation\n\nState: not held.\n"
                                              "Inspect what helped/hindered, assumptions, quality/collaboration and a few owned measurable improvements.\n",
         "handoffs/INITIAL.md": "# Initialization handoff\n\nCreated local records from the user's setup inputs.\n"
@@ -210,11 +229,13 @@ def main() -> int:
     parser.add_argument("--specialists", default="engineering,qa")
     parser.add_argument("--start-date", type=date.fromisoformat, default=date.today())
     parser.add_argument("--sprint-days", type=int, default=14)
+    parser.add_argument("--product-owner", help="Human already identified by user/project; otherwise unresolved")
+    parser.add_argument("--scrum-master", help="Person already identified by user/project; otherwise unresolved")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     try:
         writes = plan(args.root, args.name, args.goal, specialists(args.specialists),
-                      args.start_date, args.sprint_days)
+                      args.start_date, args.sprint_days, args.product_owner, args.scrum_master)
         if not args.dry_run:
             apply(writes)
         verb = "Would write" if args.dry_run else "Wrote"

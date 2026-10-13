@@ -1,4 +1,17 @@
-# Evaluation — 0.1.0
+# Evaluation record
+
+## Update - 0.2.1
+
+Accountabilities default to unresolved instead of appointing the invoking user.
+Optional supplied identity labels persist through repair; legacy assumed-user labels
+do not become identified people. Setup remains preparation even when labels exist.
+Three added cases cover identity inputs/preservation, partial/blank inputs and legacy
+repair, extending the suite to twenty-five tests. Current CI results are linked in PR3.
+
+The overview diagram now distinguishes adapting unfinished work within a Sprint from
+returning it to the backlog at Sprint end. Acceptance criteria and revision evidence
+are supporting practices, not additional formal Scrum artifacts. Changed diagrams
+are rendered and inspected. Existing specialist workflows remain available.
 
 ## Update — 0.2.0
 

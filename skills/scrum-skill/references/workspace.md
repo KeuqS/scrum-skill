@@ -22,6 +22,13 @@ ACCOUNTABILITIES.md explains Product Owner, Scrum Master and Developers behavior
 Selected known roles get maintained behavior presets, not blank placeholders;
 custom slugs use the adaptable template. Existing profiles remain untouched.
 
+Use --product-owner and --scrum-master only for identities supplied by the user or
+project records. Defaults are unresolved; invocation does not appoint the user or
+an AI. Identity labels do not prove appointments, events or full Scrum. Existing
+workspace identities are preserved during repair, not replaced by later CLI defaults.
+Legacy "human user (confirm identity if needed)" is an assumption, not an identity;
+mark it unresolved in repaired summaries and reconcile the original records explicitly.
+
 Use --specialists engineering,qa,design for chosen profiles, or --specialists none
 for a sequential generalist. The helper's default engineering,qa is an example
 software team, not a Scrum requirement. --sprint-days 14 is the default calendar

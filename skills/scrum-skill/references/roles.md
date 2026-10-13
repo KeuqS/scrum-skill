@@ -60,7 +60,8 @@ handoff path before work. Presets do not activate agents or install named tools.
 Existing project profiles are preserved; upgrading the skill does not rewrite them.
 
 Core software preset: Scrum Master assistance plus engineering, design, QA and security
-contributions; the user remains the Product Owner. These do not require legal or LQ
+contributions; retain the actually identified Product Owner or mark it unresolved.
+These do not require legal or LQ
 skills. Add legal-counsel and/or privacy-counsel only when the project needs them;
 read [legal workflow routing](legal-workflows.md) only for those tasks. AI and operations
 are optional extensions, not a requirement to increase team size.
