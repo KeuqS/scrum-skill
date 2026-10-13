@@ -11,7 +11,7 @@ A project-neutral skill for **Codex and Claude Code**. Invoke it to create or re
 
 The human Product Owner can work in any domain. Engineering, QA, design, security and domain reviewers are selected for the project. Legal counsel, specific models, frontend packages and vendor plugins are **optional**, not built-in requirements.
 
-Version **0.5.0** · MIT · Two skills: [`scrum-skill`](skills/scrum-skill/SKILL.md) and [`scrum-dashboard`](skills/scrum-dashboard/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+Version **0.5.1** · MIT · Two skills: [`scrum-skill`](skills/scrum-skill/SKILL.md) and [`scrum-dashboard`](skills/scrum-dashboard/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
 
 ## See what it creates
 
@@ -20,6 +20,9 @@ Version **0.5.0** · MIT · Two skills: [`scrum-skill`](skills/scrum-skill/SKILL
 [Run the inventory example](examples/inventory/README.md) to see real scaffold output.
 The image summarizes that helper output; it is not a native-host execution screenshot.
 
+[Release and marketplace submission guide](docs/DISTRIBUTION.md) explains the plugin,
+standalone skills and directory routes.
+
 ## Start here
 
 Choose **one** installation route to avoid duplicate skill names.
@@ -27,7 +30,7 @@ Choose **one** installation route to avoid duplicate skill names.
 ### Codex plugin
 
 ```sh
-codex plugin marketplace add kevanwee/scrum-skill --ref v0.5.0
+codex plugin marketplace add kevanwee/scrum-skill --ref v0.5.1
 codex plugin add scrum-skill@scrum-skills
 ```
 
@@ -58,7 +61,7 @@ For local development after cloning, `claude --plugin-dir /path/to/scrum-skill` 
 
 ### Direct skill folder
 
-Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.5.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
+Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.5.1`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
 
 Skills-only installation does not register a plugin, hooks or an agent runtime. See [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills). This repo publishes compatible metadata; it does not install anything into your account automatically.
 

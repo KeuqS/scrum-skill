@@ -55,6 +55,21 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "local/source document"):
             checks.validate(root)
 
+    def test_listing_subtitle_limit_is_enforced(self):
+        root = self.fixture()
+        path = root / ".codex-plugin/plugin.json"
+        manifest = json.loads(path.read_text())
+        manifest["interface"]["shortDescription"] = "x" * 31
+        path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, "invalid listing field: shortDescription"):
+            checks.validate(root)
+
+    def test_missing_listing_icon_is_rejected(self):
+        root = self.fixture()
+        (root / "assets/icon.svg").unlink()
+        with self.assertRaisesRegex(ValueError, "missing/escaping package path"):
+            checks.validate(root)
+
 
 if __name__ == "__main__":
     unittest.main()

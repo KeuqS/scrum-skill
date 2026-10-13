@@ -1,17 +1,35 @@
 {
   "name": "scrum-skill",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Project-neutral Scrum coordination, artifacts and adaptable AI teammates.",
   "license": "MIT",
   "skills": "./skills/",
   "interface": {
     "displayName": "Scrum Skill",
-    "shortDescription": "Coordinate Scrum artifacts and AI teammates",
+    "shortDescription": "Plan sprints with AI teammates",
     "category": "Productivity",
-    "websiteURL": "https://github.com/kevanwee/scrum-skill"
+    "websiteURL": "https://github.com/kevanwee/scrum-skill",
+    "longDescription": "A Scrum Guide-faithful orchestration layer for project teams using Codex or Claude Code. Create or resume local Scrum records, refine stories, prepare planning and reviews, coordinate specialist guidance, verify evidence and leave handoffs. Includes an offline Sprint-based project burndown dashboard with scope changes, velocity, progress and dated timelines. Human accountabilities, agreement and release decisions remain explicit. No MCP server, hooks, telemetry, automatic deployment or upstream skill/library source is bundled. Native installed host activation and manual accessibility testing remain follow-ups.",
+    "developerName": "Kevan Wee",
+    "capabilities": [
+      "Scrum planning",
+      "Backlog refinement",
+      "Evidence and handoffs",
+      "Sprint dashboard"
+    ],
+    "logo": "./assets/icon.svg",
+    "composerIcon": "./assets/icon.svg",
+    "screenshots": [
+      "./assets/dashboard-demo.png"
+    ],
+    "defaultPrompt": [
+      "Set up Scrum records and propose a first usable Sprint for this project.",
+      "Resume from the latest handoff and reconcile project evidence.",
+      "Create an offline dashboard from explicit Sprint snapshots."
+    ]
   },
   "author": {
-    "name": "scrum-skill contributors"
+    "name": "Kevan Wee and contributors"
   },
   "repository": "https://github.com/kevanwee/scrum-skill"
 }
