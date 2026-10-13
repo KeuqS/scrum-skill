@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from datetime import date
 from pathlib import Path
+from unittest.mock import patch
 
 REPO = Path(__file__).resolve().parents[1]
 SCRIPT = REPO / "skills/scrum-skill/scripts/init_workspace.py"
@@ -104,6 +105,21 @@ class WorkspaceTests(unittest.TestCase):
         profile = (self.root / ".scrum/roles/horticulture.md").read_text()
         self.assertIn("horticulture", profile)
         self.assertIn("Owned files/work scope:", profile)
+
+    def test_crlf_packaged_preset_is_copied_without_newline_translation(self):
+        with tempfile.TemporaryDirectory() as packaged:
+            skill = Path(packaged)
+            (skill / "assets/profiles").mkdir(parents=True)
+            (skill / "references").mkdir()
+            body = b"# QA guide\r\n\r\nEvidence and boundaries.\r\n"
+            (skill / "assets/profiles/qa.md").write_bytes(body)
+            (skill / "assets/role-profile.md").write_text("# [specialism]\n")
+            (skill / "references/accountabilities.md").write_text("# Accountabilities\n")
+            with patch.object(workspace, "SKILL", skill):
+                workspace.apply(self.plan(roles=["qa"]))
+            copied = self.root / ".scrum/roles/qa.md"
+            self.assertEqual(copied.read_bytes(), body)
+            self.assertEqual(self.plan(roles=["qa"]), {})
 
     def test_accountability_guidance_is_available_without_specialists(self):
         workspace.apply(self.plan(roles=[]))

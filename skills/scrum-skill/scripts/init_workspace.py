@@ -26,6 +26,12 @@ Apply existing project instructions first; do not infer human approval from agen
 """
 
 
+def read_guide(path: Path) -> str:
+    """Preserve distributed guide newlines when copying a selected profile."""
+    with path.open(encoding="utf-8", newline="") as stream:
+        return stream.read()
+
+
 def specialists(value: str) -> list[str]:
     if value == "none":
         return []
@@ -148,12 +154,12 @@ def plan(root: Path, name: str, goal: str, roles: list[str], start: date,
                             "Respect user/project permissions; do not infer agreement, test success or human judgment.\n"
                             "Refine the first usable slice and start it only when delivery is requested.\n",
     }
-    artifacts["ACCOUNTABILITIES.md"] = (SKILL / "references/accountabilities.md").read_text(encoding="utf-8")
-    profile = (SKILL / "assets/role-profile.md").read_text(encoding="utf-8")
+    artifacts["ACCOUNTABILITIES.md"] = read_guide(SKILL / "references/accountabilities.md")
+    profile = read_guide(SKILL / "assets/role-profile.md")
     for role in roles:
         preset = SKILL / "assets/profiles" / f"{role}.md"
         artifacts[f"roles/{role}.md"] = (
-            preset.read_text(encoding="utf-8") if preset.is_file()
+            read_guide(preset) if preset.is_file()
             else profile.replace("[specialism]", role)
         )
     writes: dict[Path, str] = {}
