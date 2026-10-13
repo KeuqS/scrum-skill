@@ -46,6 +46,19 @@ def validate(root: Path = ROOT) -> list[str]:
             raise ValueError(f"missing manifest description: {relative}")
         if "skills" in manifest and inside(root, manifest["skills"]) != skill.parent.parent:
             raise ValueError("manifest must reference the canonical skill directory")
+        if relative == ".codex-plugin/plugin.json":
+            listing = manifest.get("interface", {})
+            for field, limit in (("displayName", 30), ("shortDescription", 30),
+                                 ("longDescription", 4000), ("developerName", 80)):
+                value = listing.get(field)
+                if not isinstance(value, str) or not value.strip() or len(value) > limit:
+                    raise ValueError(f"invalid listing field: {field}")
+            if not listing.get("category") or not isinstance(listing.get("capabilities"), list):
+                raise ValueError("listing category/capabilities missing")
+            for field in ("logo", "composerIcon"):
+                inside(root, listing.get(field, ""))
+            for asset in listing.get("screenshots", []):
+                inside(root, asset)
     codex = json.loads((root / ".agents/plugins/marketplace.json").read_text())
     claude = json.loads((root / ".claude-plugin/marketplace.json").read_text())
     if codex.get("name") != claude.get("name") or not claude.get("owner", {}).get("name"):

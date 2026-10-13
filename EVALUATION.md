@@ -1,5 +1,12 @@
 # Evaluation record
 
+## Update - 0.5.1
+
+Full release packaging adds listing descriptions, publisher credit, capability labels,
+original square SVG icons and starter prompts. Two regressions check subtitle limits
+and missing icons. The suite has 54 tests. This release status does not remove earlier
+native-host or accessibility limits and does not claim marketplace approval.
+
 ## Update - 0.5.0
 
 Adds the separately invocable scrum-dashboard skill, explicit estimate provenance,
