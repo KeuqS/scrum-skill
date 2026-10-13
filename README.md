@@ -6,7 +6,7 @@ A project-neutral skill for **Codex and Claude Code**. Invoke it to create or re
 
 The human Product Owner can work in any domain. Engineering, QA, design, security and domain reviewers are selected for the project. Legal counsel, specific models, frontend packages and vendor plugins are **optional**, not built-in requirements.
 
-Version **0.2.2** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+Version **0.3.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
 
 ## Start here
 
@@ -15,7 +15,7 @@ Choose **one** installation route to avoid duplicate skill names.
 ### Codex plugin
 
 ```sh
-codex plugin marketplace add kevanwee/scrum-skill --ref v0.2.2
+codex plugin marketplace add kevanwee/scrum-skill --ref v0.3.0
 codex plugin add scrum-skill@scrum-skills
 ```
 
@@ -46,7 +46,7 @@ For local development after cloning, `claude --plugin-dir /path/to/scrum-skill` 
 
 ### Direct skill folder
 
-Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.2.2`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
+Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.3.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
 
 Skills-only installation does not register a plugin, hooks or an agent runtime. See [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills). This repo publishes compatible metadata; it does not install anything into your account automatically.
 
@@ -115,6 +115,8 @@ Read [accountability guides](skills/scrum-skill/references/accountabilities.md) 
 Setup copies selected presets into `.scrum/roles/`; unknown role names use the adaptable template. Existing profiles are preserved. These are portable instructions, not automatically registered agents. For example: `--specialists engineering,qa,design,security`; ask a delegated worker to read its profile, the shared DoD and its bounded task when delegation is authorized.
 
 ### External skills and libraries
+
+On a clean run, the [first-run setup](skills/scrum-skill/references/first-run-imports.md) identifies the selected team's required imports, presents concrete commands and scope, and verifies availability after installation. Legal roles select LQ bundles; web design selects taste/minimalist/redesign, Impeccable and applicable GSAP/Lenis libraries. Full LQ catalog import is an explicit option. Required missing tools keep the affected workflow unready until imported or an explicit fallback is chosen.
 
 scrum-skill contains original instructions, profiles and a workspace helper. It does not vendor LQ, taste-skill, Impeccable, GSAP or Lenis source, install those dependencies, or register specialist agents. The [routing protocol](skills/scrum-skill/references/dependency-routing.md) requires resolving actual host availability, loading the selected skill and recording what ran or was unavailable. Source links alone are not executable integration. GSAP and Lenis are application libraries, not agent skills.
 
