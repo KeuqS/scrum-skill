@@ -27,6 +27,9 @@ alone does not authorize implementation, Git publication, deployment or messages
 ## Setup and resume
 
 Read [workspace guidance](references/workspace.md) when establishing a workspace.
+For a clean run or newly selected legal/design role, run the [first-run import workflow](references/first-run-imports.md).
+Identify missing required dependencies, present the concrete import plan, install within
+actual authorization and verify host/worker readiness before specialist execution.
 Use the optional stdlib helper [init_workspace.py](scripts/init_workspace.py) for
 new project state; preview it with --dry-run. Existing instructions and state must
 survive unchanged outside the helper's clearly marked pointer blocks.
