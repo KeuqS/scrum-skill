@@ -6,7 +6,7 @@ A project-neutral skill for **Codex and Claude Code**. Invoke it to create or re
 
 The human Product Owner can work in any domain. Engineering, QA, design, security and domain reviewers are selected for the project. Legal counsel, specific models, frontend packages and vendor plugins are **optional**, not built-in requirements.
 
-Version **0.2.0** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
+Version **0.2.1** · MIT · One canonical [`SKILL.md`](skills/scrum-skill/SKILL.md). No bundled MCP server, lifecycle hook, telemetry or automatic cross-project synchronization. The optional workspace helper uses Python 3.10+ and the standard library.
 
 ## Start here
 
@@ -15,7 +15,7 @@ Choose **one** installation route to avoid duplicate skill names.
 ### Codex plugin
 
 ```sh
-codex plugin marketplace add kevanwee/scrum-skill --ref v0.2.0
+codex plugin marketplace add kevanwee/scrum-skill --ref v0.2.1
 codex plugin add scrum-skill@scrum-skills
 ```
 
@@ -46,7 +46,7 @@ For local development after cloning, `claude --plugin-dir /path/to/scrum-skill` 
 
 ### Direct skill folder
 
-Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.2.0`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
+Install just `skills/scrum-skill/` if you do not need a plugin catalog. For Codex, ask `$skill-installer` to install that path from this repository at `v0.2.1`, or copy it into your project's `.agents/skills/scrum-skill/`. For Claude Code, copy it into `.claude/skills/scrum-skill/` and invoke `/scrum-skill`. Preserve its scripts, references and assets. Do not overwrite an existing installation without reviewing the change.
 
 Skills-only installation does not register a plugin, hooks or an agent runtime. See [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills). This repo publishes compatible metadata; it does not install anything into your account automatically.
 
@@ -75,7 +75,9 @@ flowchart TB
   Daily["Daily Scrum: inspect Goal progress"] --> Work
   Work --> Quality{"Meets shared Definition of Done?"}
   Quality -->|Yes| Inc["Usable integrated Increment"]
-  Quality -->|No: unfinished| PB
+  Quality -->|No| Active{"Sprint still active?"}
+  Active -->|Yes: adapt and continue| Work
+  Active -->|No: unfinished at Sprint end| PB
   Inc --> Review["Sprint Review: inspect product and adapt backlog"]
   Review --> PB
   Review --> Retro["Retrospective: improve quality and effectiveness"]
@@ -104,6 +106,8 @@ The Product Owner is one person; the Scrum Master serves the whole team. Develop
 
 ### Predefined behavior guides
 
+Identify the Product Owner and Scrum Master from actual instructions or project records. Skill invocation does not appoint anyone. If either is unknown, record it as unresolved and call the current setup Scrum-informed. The optional helper accepts `--product-owner` and `--scrum-master` for identities already supplied; neither proves appointment, participation or full Scrum implementation.
+
 Read [accountability guides](skills/scrum-skill/references/accountabilities.md) for Product Owner, Scrum Master and Developers behavior and decision boundaries. [Role selection](skills/scrum-skill/references/roles.md) links presets for engineering, QA, UI/UX, security, optional Legal Counsel and PDPA/GDPR Counsel, AI/data, operations and domain review. Each preset describes its contribution, working approach, evidence and boundaries. Specialisms share one Definition of Done and collaborate throughout delivery.
 
 Setup copies selected presets into `.scrum/roles/`; unknown role names use the adaptable template. Existing profiles are preserved. These are portable instructions, not automatically registered agents. For example: `--specialists engineering,qa,design,security`; ask a delegated worker to read its profile, the shared DoD and its bounded task when delegation is authorized.
@@ -115,11 +119,11 @@ flowchart TB
   PB["Product Backlog: ordered work and refinement"] --> PG["Commitment: Product Goal"]
   SB["Sprint Backlog: selected work and adaptable plan"] --> SG["Commitment: Sprint Goal"]
   INC["Increment: usable integrated outcome"] --> DOD["Commitment: Definition of Done"]
-  AC["Item acceptance criteria"] -.->|Behavior to verify| INC
-  Evidence["Revision-specific evidence"] -.->|Quality to demonstrate| DOD
+  AC["Supporting practice: item acceptance criteria<br/>Not a formal Scrum artifact"] -.->|Behavior to verify| INC
+  Evidence["Supporting practice: revision-specific evidence<br/>Not a formal Scrum artifact"] -.->|Quality to demonstrate| DOD
 ```
 
-Acceptance criteria describe each item's behavior. The Definition of Done describes shared product quality. CI, architecture, accessibility, security/privacy and domain review are chosen for the actual project. Local tests, mocks and coverage do not establish every integration or human decision.
+Acceptance criteria describe each item's behavior. The Definition of Done describes shared product quality. Acceptance criteria and evidence maps are supporting practices, not additional formal Scrum artifacts. CI, architecture, accessibility, security/privacy and domain review are chosen for the actual project. Local tests, mocks and coverage do not establish every integration or human decision.
 
 ## Events are different conversations
 

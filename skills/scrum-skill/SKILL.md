@@ -46,7 +46,9 @@ Never move project-private content into another repo merely to improve this skil
 Read [accountabilities and role profiles](references/roles.md).
 Read [behavior and decision boundaries](references/accountabilities.md) when adopting
 an accountability; use only the selected specialist presets linked from role guidance.
-The user is the human Product Owner unless another accountable person is identified.
+Use the Product Owner and Scrum Master identified by the user or existing project
+records. Otherwise mark the accountability unresolved; invoking the skill does not
+appoint the user or an AI. Keep unresolved setups explicitly Scrum-informed.
 Use one cross-functional Developers team. Specialist profiles are contributions
 within that team, not subordinate teams or additional accountabilities.
 The Scrum Master serves the whole team, not as its task manager. The Product Owner
@@ -87,7 +89,8 @@ A role review using one account is not an independent human GitHub approval.
 
 Separate Sprint Review (product outcomes, real stakeholder feedback and backlog
 adaptation) from Retrospective (collaboration, quality and owned improvements).
-Present only work meeting the shared DoD as an Increment. Record unfinished work
+During the Sprint, adapt and continue work that does not yet meet DoD. Present only
+work meeting the shared DoD as an Increment. Record unfinished work
 separately and return it to the Product Backlog at Sprint end. A failed release gate
 does not justify extending the Sprint indefinitely. Review is not a release gate.
 Select a few measurable improvements and inspect them next time.

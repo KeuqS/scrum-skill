@@ -33,5 +33,5 @@ Acceptance criteria describe an item's behavior. DoD is the shared Increment qua
 commitment, tailored to the product/organization. CI, reviews and safety requirements
 apply when the project includes them; a non-software project needs its own evidence.
 Do not silently waive an agreed quality criterion because infrastructure is missing.
-Record the limitation and return unfinished work for reordering. Product/legal release
+Record the limitation; adapt and continue within the Sprint. At Sprint end, return unfinished work for reordering. Product/legal release
 decisions cannot be inferred from a green check or a merge.

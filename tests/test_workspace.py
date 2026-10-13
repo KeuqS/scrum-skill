@@ -35,7 +35,11 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(state["state"], "proposed")
         self.assertEqual(state["forecast_end"], "2026-11-01")
         self.assertEqual(state["specialists"], ["engineering", "qa"])
-        self.assertEqual(state["skill_version"], "0.2.0")
+        self.assertEqual(state["skill_version"], "0.2.1")
+        self.assertIsNone(state["product_owner"])
+        self.assertIsNone(state["scrum_master"])
+        self.assertEqual(state["accountabilities"], "unresolved")
+        self.assertIn("Product Owner: unresolved", (self.root / ".scrum/TEAM.md").read_text())
         self.assertTrue((self.root / ".scrum/sprints/SPRINT-01-RETROSPECTIVE.md").is_file())
         self.assertTrue((self.root / ".scrum/handoffs/LATEST.md").is_file())
 
@@ -85,6 +89,49 @@ class WorkspaceTests(unittest.TestCase):
         for raw in ("qa,qa", "../../outside", "research,", "Domain Expert"):
             with self.subTest(raw=raw), self.assertRaises(ValueError):
                 workspace.specialists(raw)
+
+    def test_supplied_accountabilities_survive_cli_defaults_and_repair(self):
+        subprocess.run([sys.executable, str(SCRIPT), "--root", str(self.root),
+                        "--name", "inventory", "--goal", "Track stock",
+                        "--product-owner", "Product owner A", "--scrum-master", "Scrum master B"],
+                       capture_output=True, text=True, check=True)
+        manifest = self.root / ".scrum/workspace.json"
+        before = manifest.read_bytes()
+        state = json.loads(before)
+        self.assertEqual(state["product_owner"], "Product owner A")
+        self.assertEqual(state["scrum_master"], "Scrum master B")
+        self.assertEqual(state["accountabilities"], "identified")
+        self.assertIn("preparation", state["framework_status"])
+        (self.root / ".scrum/TEAM.md").unlink()
+        workspace.apply(self.plan(product_owner="Different label", scrum_master="Other label"))
+        self.assertEqual(manifest.read_bytes(), before)
+        team = (self.root / ".scrum/TEAM.md").read_text()
+        self.assertIn("Product Owner: Product owner A", team)
+        self.assertIn("Scrum Master: Scrum master B", team)
+        self.assertNotIn("Different label", team)
+
+    def test_partial_identity_remains_unresolved_and_blank_is_rejected(self):
+        workspace.apply(self.plan(product_owner="Product owner A"))
+        state = json.loads((self.root / ".scrum/workspace.json").read_text())
+        self.assertEqual(state["accountabilities"], "unresolved")
+        self.assertIsNone(state["scrum_master"])
+        with self.assertRaisesRegex(ValueError, "non-empty"):
+            self.plan(product_owner=" ")
+
+    def test_legacy_assumed_user_is_not_promoted_to_identity_during_repair(self):
+        workspace.apply(self.plan())
+        manifest = self.root / ".scrum/workspace.json"
+        state = json.loads(manifest.read_text())
+        state["product_owner"] = "human user (confirm identity if needed)"
+        state.pop("scrum_master")
+        manifest.write_text(json.dumps(state), encoding="utf-8")
+        before = manifest.read_bytes()
+        (self.root / ".scrum/TEAM.md").unlink()
+        workspace.apply(self.plan())
+        self.assertEqual(manifest.read_bytes(), before)
+        team = (self.root / ".scrum/TEAM.md").read_text()
+        self.assertIn("Product Owner: unresolved", team)
+        self.assertIn("Scrum Master: unresolved", team)
 
     def test_selected_presets_include_behavior_and_preserve_customization(self):
         roles = ["engineering", "qa", "design", "security", "ai", "operations",
