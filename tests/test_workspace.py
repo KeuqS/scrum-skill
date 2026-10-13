@@ -35,13 +35,32 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(state["state"], "proposed")
         self.assertEqual(state["forecast_end"], "2026-11-01")
         self.assertEqual(state["specialists"], ["engineering", "qa"])
-        self.assertEqual(state["skill_version"], "0.4.0")
+        self.assertEqual(state["skill_version"], "0.5.0")
         self.assertIsNone(state["product_owner"])
         self.assertIsNone(state["scrum_master"])
         self.assertEqual(state["accountabilities"], "unresolved")
         self.assertIn("Product Owner: unresolved", (self.root / ".scrum/TEAM.md").read_text())
         self.assertTrue((self.root / ".scrum/sprints/SPRINT-01-RETROSPECTIVE.md").is_file())
         self.assertTrue((self.root / ".scrum/handoffs/LATEST.md").is_file())
+
+    def test_dashboard_input_starts_empty_and_preserves_recorded_history(self):
+        workspace.apply(self.plan())
+        path = self.root / ".scrum/metrics.json"
+        data = json.loads(path.read_text())
+        self.assertEqual(data["backlog"], [])
+        self.assertEqual(data["sprints"], [])
+        spec = importlib.util.spec_from_file_location("dashboard_bridge", REPO /
+            "skills/scrum-dashboard/scripts/generate_dashboard.py")
+        dashboard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(dashboard)
+        self.assertEqual(dashboard.metrics(data)["history"], [])
+        data["backlog"] = [{"id": "US-1", "title": "Inspect stock", "points": None,
+                            "status": "backlog", "dod_met": False}]
+        path.write_text(json.dumps(data), encoding="utf-8")
+        before = path.read_bytes()
+        workspace.apply(self.plan())
+        self.assertEqual(path.read_bytes(), before)
+        self.assertEqual(dashboard.metrics(data)["unestimated"], 1)
 
     def test_existing_instructions_preserved_byte_for_byte(self):
         original = b"# Existing policy\r\nDo not publish plans.\r\n"

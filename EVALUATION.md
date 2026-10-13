@@ -1,5 +1,20 @@
 # Evaluation record
 
+## Update - 0.5.0
+
+Adds the separately invocable scrum-dashboard skill, explicit estimate provenance,
+Planning Poker guidance, scope records and project lifecycle guidance. The suite has
+52 tests; local Windows runs skip the symlink privilege case. The new cases verify
+historical metric preservation, changing scope reconciliation, no partial credit,
+missing versus zero values, duplicate completion, malformed input, script-safe data,
+exclusive output creation, secondary skill identity and the workspace/dashboard bridge.
+
+Synthetic desktop/mobile renders and headless browser interactions were checked.
+Long histories scroll within the chart region; absent data remains explicit. This
+is not a manual screen-reader, real-device or installed native-host evaluation.
+No stakeholder event, real voting session, human legal approval or deployment is
+claimed by this evaluation. See [workflow review](docs/WORKFLOW_REVIEW.md).
+
 ## Update - 0.4.0
 
 Adds explicit workflow/role routing and a guided bare-call wizard. The optional

@@ -8,7 +8,7 @@ import re
 import shlex
 import sys
 
-MODES = {"wizard", "setup", "resume", "plan", "deliver", "review", "retro", "doctor"}
+MODES = {"wizard", "setup", "resume", "plan", "deliver", "review", "retro", "doctor", "dashboard"}
 ALIASES = {
     "scrum-master": "scrum-master", "sm": "scrum-master",
     "engineering": "engineering", "engineer": "engineering", "software-engineer": "engineering",

@@ -76,6 +76,11 @@ Keep specialist reviews proportional to actual scope and risk.
 
 ## Refine, plan and deliver
 
+Use [project lifecycle guidance](references/project-lifecycle.md) for discovery and
+release/transition checkpoints. Attach estimates with state/provenance and use
+[Planning Poker and scope history](references/estimation.md) for point-based planning.
+Do not invent votes, capacity, velocity, dates or closed-Sprint history.
+
 Read [events and artifact commitments](references/scrum.md) and, for software delivery,
 [engineering evidence](references/engineering.md). Start from a user outcome; use
 INVEST and Given/When/Then as refinement aids, not mandatory extra Scrum gates.
@@ -96,6 +101,10 @@ use isolated worktrees once a base exists when parallel branches would collide.
 A role review using one account is not an independent human GitHub approval.
 
 ## Review, retrospect and hand off
+
+For a visual overview, route to separately installed `scrum-dashboard`: project
+burndown by Sprint, velocity, point/progress tables and optional dated Gantt. Preserve
+historical snapshots/scope changes and keep local project records private.
 
 Separate Sprint Review (product outcomes, real stakeholder feedback and backlog
 adaptation) from Retrospective (collaboration, quality and owned improvements).

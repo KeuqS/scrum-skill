@@ -42,6 +42,13 @@ class PackageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             checks.inside(ROOT, "./../outside")
 
+    def test_dashboard_identity_drift_is_detected(self):
+        root = self.fixture()
+        path = root / "skills/scrum-dashboard/SKILL.md"
+        path.write_text(path.read_text().replace("name: scrum-dashboard", "name: wrong-name"))
+        with self.assertRaisesRegex(ValueError, "dashboard skill identity"):
+            checks.validate(root)
+
     def test_source_pdf_in_package_is_rejected(self):
         root = self.fixture()
         (root / "reference.pdf").write_bytes(b"synthetic fixture")

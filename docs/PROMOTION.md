@@ -9,7 +9,7 @@ It helps create goals, backlog and team profiles, plan small slices, track evide
 inspect outcomes and leave a reliable handoff. Humans retain product decisions;
 agent notes do not manufacture Scrum events or legal sign-off.
 
-Try the invented inventory example, inspect the Mermaid explanations, and contribute
+Try the invented inventory example and offline Sprint-burndown dashboard, inspect the Mermaid explanations, and contribute
 a reproducible workflow improvement: https://github.com/kevanwee/scrum-skill
 
 Host activation and external dependency availability vary. Package tests are not

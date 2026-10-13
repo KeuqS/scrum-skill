@@ -10,11 +10,14 @@ python skills/scrum-skill/scripts/init_workspace.py --root /path/to/empty-projec
 Actual helper output from a fresh isolated directory:
 
 ```text
-Wrote 22 files; existing records preserved.
+Wrote 25 files; existing records preserved.
 .scrum\workspace.json
 .scrum\PRODUCT_GOAL.md
 .scrum\TEAM.md
 .scrum\PRODUCT_BACKLOG.md
+.scrum\ESTIMATES.md
+.scrum\SCOPE_HISTORY.md
+.scrum\metrics.json
 .scrum\DEFINITION_OF_DONE.md
 .scrum\DECISIONS.md
 .scrum\IMPEDIMENTS.md

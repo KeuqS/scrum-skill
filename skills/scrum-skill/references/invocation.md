@@ -17,6 +17,7 @@ arguments. A direct Claude skill install uses `/scrum-skill`.
 | review | SM: Sprint Review preparation; specialist: scoped discipline review |
 | retro | Inspect collaboration/quality and owned measurable improvements |
 | doctor | Diagnose artifacts/dependency readiness; report findings, no silent repair |
+| dashboard | Use available scrum-dashboard with explicit local data; no automatic publication or inferred history |
 
 ```text
 $scrum-skill setup --goal "Staff can inspect stock changes" --roles engineering,qa,design

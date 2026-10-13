@@ -30,6 +30,13 @@ def validate(root: Path = ROOT) -> list[str]:
     fields = dict(line.split(": ", 1) for line in match[1].splitlines())
     if fields.get("name") != "scrum-skill" or not fields.get("description"):
         raise ValueError("skill identity/description is missing")
+    dashboard = (root / "skills/scrum-dashboard/SKILL.md").read_text(encoding="utf-8")
+    match = re.match(r"\A---\n(.*?)\n---\n", dashboard, re.S)
+    if not match:
+        raise ValueError("dashboard skill frontmatter is missing")
+    secondary = dict(line.split(": ", 1) for line in match[1].splitlines())
+    if secondary.get("name") != "scrum-dashboard" or not secondary.get("description"):
+        raise ValueError("dashboard skill identity/description is missing")
     version = json.loads((root / "skills/scrum-skill/assets/version.json").read_text())["version"]
     for relative in ("plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json"):
         manifest = json.loads((root / relative).read_text(encoding="utf-8"))
